@@ -18,11 +18,11 @@ num_fichier = 0
 frame_list = [False,False]
 
 #paramètre
-N_planete = 50 #nombre de planetes
-frame = 1000 #Nombre de frame à calculer
-G = 50 #Constante de gravitation
+N_planete = 150 #nombre de planetes
+frame = 500 #Nombre de frame à calculer
+G = 500 #Constante de gravitation
 MR = 10 #Rapport de puissance masse rayon
-rayon_max = 5
+rayon_max = 10
 rayon_min = 1
 v_init = 5
 
@@ -107,6 +107,7 @@ while 1:
     for event in pygame.event.get(): #Recupération des events
         if event.type == pygame.QUIT:  
                 pygame.quit()
+                sys.exit()
         if event.type == pygame.MOUSEMOTION:
             souris.happend["mousex"], souris.happend["mousey"] = pygame.mouse.get_pos() 
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -272,6 +273,7 @@ while 1:
                     if(phase == "visualisation"):
                         flag.join() #fin du thread qui compte le temps
                         print("Lancer la VISUALISATION")
+                        last_file = False
                         break
 
             souris.happend["valider"] = False
@@ -298,8 +300,11 @@ while 1:
                         data_dict = json.load(json_data)
                         print("Changement file")
             except FileNotFoundError:
-                print("EXIT")
-                sys.exit()
+                print("FILENOTFOUNDERROR : data" +str(num_fichier-1)+ ".json doesn't exist")
+                if last_file == True:
+                    print("EXIT")
+                    sys.exit()
+                last_file = True
 
             frame_list[(num_fichier-1)%2] = enumerate(data_dict["frame"])
                 

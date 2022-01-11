@@ -20,7 +20,7 @@ planete * init_planete(int id, int MR, int rayon_max, int rayon_min,int v_init) 
     ma_planete->x[0] = rand() % x_init_max;
     ma_planete->x[1] = rand() % x_init_max;
     ma_planete->rayon = (rand()  % (rayon_max-rayon_min)) + rayon_min;
-    ma_planete->masse = pow(ma_planete->rayon,MR);
+    ma_planete->masse = 4.18*pow(ma_planete->rayon,MR)*5000; //4/3 * pi = 4.18   5000=masse_volumique kg/m3
 
     return ma_planete;
 }

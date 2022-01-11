@@ -51,7 +51,7 @@ double force_G(long int G, planete * a, planete * b, int coord) {
     double d_h = (a->x[0] - b->x[0]);
     double d_v = (a->x[1] - b->x[1]);
     double d = distance(a, b);
-    double force = pow(G,-11)*(b->masse/(d*d));
+    double force = G*pow(10,-2)*(b->masse/(d*d));
     double teta = acos(fabs(d_h/d));
 
     double x;

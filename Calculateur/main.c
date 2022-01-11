@@ -89,8 +89,8 @@ int main() {
                 if(i!=j) {
                     if(all_planete[i]->id != -1) {
                         if(all_planete[j]->id != -1) {
-                            all_planete[i]->a[0] += force_G(G, all_planete[i], all_planete[j],0)/20;
-                            all_planete[i]->a[1] += force_G(G, all_planete[i], all_planete[j],1)/20;
+                            all_planete[i]->a[0] += force_G(G, all_planete[i], all_planete[j],0);
+                            all_planete[i]->a[1] += force_G(G, all_planete[i], all_planete[j],1);
                         }
                     } else {
                         break;
@@ -101,8 +101,8 @@ int main() {
 
         for(int i = 0; i < N_planete; i++) {
             //Ajoute les accélérations aux vitesses
-            all_planete[i]->v[0] += all_planete[i]->a[0]; //0.000000000001
-            all_planete[i]->v[1] += all_planete[i]->a[1];
+            all_planete[i]->v[0] += 0.000000000001*all_planete[i]->a[0]; //0.000000000001
+            all_planete[i]->v[1] += 0.000000000001*all_planete[i]->a[1];
 
             //Ajoute les vitesses aux positions
             all_planete[i]->x[0] += all_planete[i]->v[0];
