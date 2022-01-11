@@ -1,0 +1,5 @@
+data/
+*.json
+Calculateur/*.o
+Afficheur/__pycache__
+
