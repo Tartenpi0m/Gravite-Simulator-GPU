@@ -20,8 +20,19 @@ planete * init_planete(int id, int MR, int rayon_max, int rayon_min,int v_init) 
     ma_planete->x[0] = rand() % x_init_max;
     ma_planete->x[1] = rand() % x_init_max;
     ma_planete->rayon = (rand()  % (rayon_max-rayon_min)) + rayon_min;
-    ma_planete->masse = 4.18*pow(ma_planete->rayon,MR)*5000; //4/3 * pi = 4.18   5000=masse_volumique kg/m3
+    ma_planete->masse = 4.18*pow(ma_planete->rayon*MR,9)*5; //4/3 * pi = 4.18   5000=masse_volumique kg/m3
 
+    return ma_planete;
+}
+
+
+planete * init_trou_noir() {
+    planete * ma_planete = malloc(sizeof(planete));
+    ma_planete->id=-2;
+    ma_planete->x[0] = x_init_max/2;
+    ma_planete->x[1] = x_init_max/3;
+    ma_planete->rayon = 20;
+    ma_planete->masse = 4.18*pow(ma_planete->rayon*5000000,3);
     return ma_planete;
 }
 
@@ -33,9 +44,11 @@ planete ** init_all_planete(int N_planete, int MR, int rayon_max, int rayon_min,
         tab[i] = malloc(sizeof(planete*));
     }
 
-    for(int i = 0; i < N_planete; i++) {
+    for(int i = 0; i < N_planete-1; i++) {
         tab[i] = init_planete(i, MR, rayon_max, rayon_min, v_init);
     }
+
+    tab[N_planete-1] = init_trou_noir();
 
     return tab;
 }

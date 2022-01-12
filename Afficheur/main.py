@@ -20,8 +20,8 @@ frame_list = [False,False]
 #paramètre
 N_planete = 150 #nombre de planetes
 frame = 500 #Nombre de frame à calculer
-G = 500 #Constante de gravitation
-MR = 10 #Rapport de puissance masse rayon
+G = 10 #Constante de gravitation
+MR = 30 #Rapport de puissance masse rayon
 rayon_max = 10
 rayon_min = 1
 v_init = 5

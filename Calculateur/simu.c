@@ -19,14 +19,23 @@ double distance(planete * a, planete * b) {
 //Regroupe 2 planetes en une (moyenne des position, moyenne des vitesses, addition des volumes (aires))
 void regroupe(planete * a, planete* b) {
 
-    a->v[0] = (a->v[0] +b->v[0]) / 2;
-    a->v[1] = (a->v[1] + b->v[1]) / 2; 
+    if(b->id == -2) {
+        return;
+    }
+    if(a->id != -2) {
 
-    double ratio = a->masse/b->masse;
-    double coefa = 2*(ratio/(ratio+1));
-    a->x[0] = (coefa*a->x[0] + (2-coefa)*b->x[0])/2;
-    a->x[1] = (coefa*a->x[1] + (2-coefa)*b->x[1])/2;
-    a->rayon = sqrt(pow(a->rayon,2)+pow(b->rayon,2));
+        a->v[0] = (a->v[0] +b->v[0]) / 2;
+        a->v[1] = (a->v[1] + b->v[1]) / 2; 
+
+        double ratio = a->masse/b->masse;
+        double coefa = 2*(ratio/(ratio+1));
+        a->x[0] = (coefa*a->x[0] + (2-coefa)*b->x[0])/2;
+        a->x[1] = (coefa*a->x[1] + (2-coefa)*b->x[1])/2;
+        a->rayon = sqrt(pow(a->rayon,2)+pow(b->rayon,2));
+        a->masse += b->masse;
+
+    }
+
 
     b->id = -1;
     b->rayon = 0;
@@ -51,7 +60,7 @@ double force_G(long int G, planete * a, planete * b, int coord) {
     double d_h = (a->x[0] - b->x[0]);
     double d_v = (a->x[1] - b->x[1]);
     double d = distance(a, b);
-    double force = G*pow(10,-2)*(b->masse/(d*d));
+    double force = G*pow(10,-11)*(b->masse/(d*d));
     double teta = acos(fabs(d_h/d));
 
     double x;

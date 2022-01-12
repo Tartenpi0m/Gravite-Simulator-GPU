@@ -15,6 +15,7 @@ struct planete {
 #endif //PLANET
 
 planete * init_planete(int id, int MR, int rayon_max, int rayon_min,int v_init);
+planete * init_trou_noir();
 
 planete ** init_all_planete(int N_planete, int MR, int rayon_max, int rayon_min,int v_init);
 

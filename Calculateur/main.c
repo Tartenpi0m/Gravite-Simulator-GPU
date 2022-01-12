@@ -31,7 +31,7 @@ int main() {
         }
     } 
     close(f);
-    int N_planete = (int) param[0];
+    int N_planete = (int) param[0] + 1;
     //int nb_frame = param[1]
     int nb_frame = (int) param[1];
     long int G = param[2];
@@ -100,13 +100,17 @@ int main() {
         }
 
         for(int i = 0; i < N_planete; i++) {
-            //Ajoute les accélérations aux vitesses
-            all_planete[i]->v[0] += 0.000000000001*all_planete[i]->a[0]; //0.000000000001
-            all_planete[i]->v[1] += 0.000000000001*all_planete[i]->a[1];
 
-            //Ajoute les vitesses aux positions
-            all_planete[i]->x[0] += all_planete[i]->v[0];
-            all_planete[i]->x[1] += all_planete[i]->v[1];
+            if(all_planete[i]->id >=1) {
+
+                //Ajoute les accélérations aux vitesses
+                all_planete[i]->v[0] += 0.00000000001*all_planete[i]->a[0]; //0.000000000001
+                all_planete[i]->v[1] += 0.00000000001*all_planete[i]->a[1];
+
+                //Ajoute les vitesses aux positions
+                all_planete[i]->x[0] += all_planete[i]->v[0];
+                all_planete[i]->x[1] += all_planete[i]->v[1];
+            }
         }
 
         

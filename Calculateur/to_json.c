@@ -11,6 +11,7 @@ void begin_frame(FILE * f, long unsigned int frame) {
 }
 
 void add_planet(FILE * f, planete * p) {
+
     fprintf(f, "\t\t\t\t{\n\t\t\t\t\t\"id\" : %d,\n\t\t\t\t\t\"r\" : %lf,\n\t\t\t\t\t\"x\" : %lf,\n\t\t\t\t\t\"y\" : %lf\n\t\t\t\t}", p->id, p->rayon, p->x[0], p->x[1]);
 
     return;
@@ -32,9 +33,13 @@ void end_file(FILE * f) {
 void write_frame(FILE * f, long unsigned int frame, planete ** planets_tab, int N_planete) {
 
     begin_frame(f,frame);
-    for(int i = 0; i < N_planete-1; i++) {
-        add_planet(f,planets_tab[i]);
-        virgule(f);
+    for(int i = 0; i < N_planete; i++) {
+       if(planets_tab[i]->id == -1) {
+            continue;
+        } else {
+            add_planet(f,planets_tab[i]);
+            virgule(f);
+        }
     }
     add_planet(f,planets_tab[N_planete-1]);
     end_frame(f);
