@@ -33,7 +33,7 @@ void end_file(FILE * f) {
 void write_frame(FILE * f, long unsigned int frame, planete ** planets_tab, int N_planete) {
 
     begin_frame(f,frame);
-    for(int i = 0; i < N_planete; i++) {
+    for(int i = 0; i < N_planete-1; i++) {
        if(planets_tab[i]->id == -1) {
             continue;
         } else {

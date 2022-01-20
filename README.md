@@ -11,9 +11,9 @@ Ensuite **tapez une des commandes suivantes** (si vous avez un doute, choisissez
 ```git clone git@github.com:Tartenpi0m/Gravite-Simulator-GPU.git```
 
  Enfin donnez les droits d'execution à ```installation.sh``` et executez le.
- Pour cela, positionnez vous dans le repertoire dans lequel vous voulez installer le logiciel et après y avoir glisser le fichier ```installation.sh```, tapez dans l'ordre :  
-```chmod +x installation.sh```
-```./installation.sh``` 
+ Pour cela, tapez dans l'ordre :  
+```chmod +x installation.sh```  
+```./installation.sh```   
 
 C'est terminé ! Lancer le simulateur en executant ```app.sh```.
 

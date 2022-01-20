@@ -31,7 +31,8 @@ int main() {
         }
     } 
     close(f);
-    int N_planete = (int) param[0] + 1;
+    int N_planete = (int) param[0];
+    //int N_trou_noir = 2;// (int) param[1];
     //int nb_frame = param[1]
     int nb_frame = (int) param[1];
     long int G = param[2];
@@ -39,10 +40,13 @@ int main() {
     int rayon_max = param[4];
     int rayon_min = param[5];
     int v_init = param[6];
+    int N_trou_noir = param[7];
+
+    int N_corps = N_planete + N_trou_noir;
 
     printf("%ld %d", G,MR);
     //Initialiser les planètes
-    planete ** all_planete = init_all_planete(N_planete, MR, rayon_max, rayon_min, v_init);
+    planete ** all_planete = init_all_planete(N_planete, N_trou_noir, MR, rayon_max, rayon_min, v_init);
 
     //ENVOIE DU SIGNAL "debut des calculs"
     char y[8] = {'s','t','a','r','t','e','d'};
@@ -60,12 +64,12 @@ int main() {
     printf("Debut du calcul pour %d frames\n", nb_frame);
     while(frame < nb_frame) {
 
-        printf("frame : %d\n", frame); fflush(stdout);
+        //printf("frame : %d\n", frame); fflush(stdout);
 
        // printf("Collision\n");
         //Verifie toutes les collisions
-        for(int i = 0; i < N_planete; i++) {
-            for(int j = 0; j < N_planete; j++) {
+        for(int i = 0; i < N_corps; i++) {
+            for(int j = 0; j < N_corps; j++) {
                 if(i != j) {
                     if(all_planete[i]->id != -1) {
                         if(all_planete[j]->id != -1) {
@@ -82,10 +86,10 @@ int main() {
 
         //Calcule les accélérations
        // printf("Acceleration\n"); fflush(stdout);
-        for(int i = 0; i < N_planete; i++) {
+        for(int i = 0; i < N_corps; i++) {
             all_planete[i]->a[0] = 0;
             all_planete[i]->a[1] = 0;
-            for(int j = 0; j < N_planete; j++) {
+            for(int j = 0; j < N_corps; j++) {
                 if(i!=j) {
                     if(all_planete[i]->id != -1) {
                         if(all_planete[j]->id != -1) {
@@ -99,7 +103,7 @@ int main() {
             }
         }
 
-        for(int i = 0; i < N_planete; i++) {
+        for(int i = 0; i < N_corps; i++) {
 
             if(all_planete[i]->id >=1) {
 
@@ -114,7 +118,7 @@ int main() {
         }
 
         
-        write_frame(data,frame, all_planete, N_planete);
+        write_frame(data,frame, all_planete, N_corps);
         if(frame < nb_frame-1) {
             virgule(data);
         }
@@ -129,7 +133,7 @@ int main() {
 
         fclose(data);
 
-    free_all_planete(all_planete, N_planete);
+    free_all_planete(all_planete, N_corps);
 
 
     sleep(1);    

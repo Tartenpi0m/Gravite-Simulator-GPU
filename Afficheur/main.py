@@ -19,6 +19,7 @@ frame_list = [False,False]
 
 #paramètre
 N_planete = 150 #nombre de planetes
+N_trou_noir = 0
 frame = 500 #Nombre de frame à calculer
 G = 10 #Constante de gravitation
 MR = 30 #Rapport de puissance masse rayon
@@ -51,7 +52,7 @@ menu_screen = pygame.display.set_mode(menu_size)
 font = pygame.font.SysFont("Corbel", 25) #Defining a font
 
 #item
-line = [i for i in range(7)]
+line = [i for i in range(8)]
 d_bouton = 400
 d_h_bouton = 14
 bouton_list = []  
@@ -70,12 +71,14 @@ bouton_list.append(bouton.bouton("+_rayon_min", (d_bouton,(line[5])*28+d_h_bouto
 bouton_list.append(bouton.bouton("-_rayon_min", (d_bouton-30,(line[5])*28+d_h_bouton), texte="-", font=font, size=(20,20)))
 bouton_list.append(bouton.bouton("+_v_init", (d_bouton,(line[6])*28+d_h_bouton), texte="+", font=font, size=(20,20)))
 bouton_list.append(bouton.bouton("-_v_init", (d_bouton-30,(line[6])*28+d_h_bouton), texte="-", font=font, size=(20,20)))
+bouton_list.append(bouton.bouton("+_trou_noir", (d_bouton,(line[7])*28+d_h_bouton), texte="+", font=font, size=(20,20)))
+bouton_list.append(bouton.bouton("-_trou_noir", (d_bouton-30,(line[7])*28+d_h_bouton), texte="-", font=font, size=(20,20)))
 
 
 tab_texte = ["Nombre de planetes : " + str(N_planete), "Nombre de frames : " + str(frame)
 ,"Force d'apesanteur : " + str(G), "Rapport de puissance masse/rayon : "+ str(MR),
 "Rayon max des planètes :" + str(rayon_max), "Rayon min des planètes : " + str(rayon_min),
-"Vitesse initiale max des planètes : " + str(v_init)]
+"Vitesse initiale max des planètes : " + str(v_init), "Nombre de trou noir : " + str(N_trou_noir)]
 texte = paragraphe.paragraphe(tab_texte, line, (10,10), font, grey, menu_screen)
 
 #controller
@@ -197,6 +200,15 @@ while 1:
                 v_init -=1
             souris.happend[bouton_list[14].name] = False
 
+        if souris.happend[bouton_list[15].name] == True:
+            N_trou_noir +=1
+            souris.happend[bouton_list[15].name] = False
+
+        if souris.happend[bouton_list[16].name] == True:
+            if N_trou_noir > 0:
+                N_trou_noir -=1
+            souris.happend[bouton_list[16].name] = False
+
 
 
 
@@ -206,7 +218,7 @@ while 1:
         tab_texte = ["Nombre de planetes : " + str(N_planete), "Nombre de frames : " + str(frame)
 ,"Force d'apesanteur : " + str(G), "Rapport de puissance masse/rayon : "+ str(MR),
 "Rayon max des planètes :" + str(rayon_max), "Rayon min des planètes : " + str(rayon_min),
-"Vitesse initiale max des planètes : " + str(v_init)]
+"Vitesse initiale max des planètes : " + str(v_init), "Nombre de trou noir : " + str(N_trou_noir)]
         texte.actualise(tab_texte, line)
 
 
@@ -228,6 +240,7 @@ while 1:
             param_tab.append(rayon_max)
             param_tab.append(rayon_min)
             param_tab.append(v_init)
+            param_tab.append(N_trou_noir)
             param_tab.append("start") #dernier element du tableau pour indiquer a C de lancer les calculs
             menu_screen.fill(black)
             temps_texte = paragraphe.paragraphe(["Temps ecoulé : " + str(round(temps,1)) +"s"], [0],(width/2-100, height/2), font, grey, menu_screen)   
