@@ -28,7 +28,7 @@ planete * init_planete(int id, int MR, int rayon_max, int rayon_min,int v_init) 
 
 planete * init_trou_noir() {
     planete * ma_planete = malloc(sizeof(planete));
-    ma_planete->id=-2;
+    ma_planete->id= -2;
     ma_planete->x[0] = (rand() % 5 + 2)*(x_init_max/10);
     ma_planete->x[1] = (rand() % 5 + 2)*(x_init_max/17);
     ma_planete->rayon = 20;

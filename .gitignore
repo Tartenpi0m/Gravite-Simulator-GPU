@@ -2,4 +2,7 @@ data/
 *.json
 Calculateur/*.o
 Afficheur/__pycache__
-
+*CMakeFiles/
+*.cmake
+*Makefile
+*CMakeCache.txt
