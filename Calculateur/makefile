@@ -13,7 +13,7 @@ simu.o : simu.c  planete.h
 	gcc -Wall -lm -c simu.c 
 
 main.o : main.c planete.h simu.h
-	gcc -Wall -c main.c
+	gcc -c main.c
 
 
 
