@@ -7,8 +7,8 @@
 #include <time.h>
 
 #include "planete.h"
-#include "simu.h"
 #include "to_json.h"
+#include "kernel.h"
 
 
 
@@ -56,82 +56,16 @@ int main() {
 
 
     //Frame
-    int frame = 0;
     FILE * data;
     data = fopen("data/data1.json", "w");
     begin_file(data);
 
     printf("Debut du calcul pour %d frames\n", nb_frame);
-    while(frame < nb_frame) {
+    
+    gestion(nb_frame, all_planete, N_corps, data, G);
 
-        //printf("frame : %d\n", frame); fflush(stdout);
-
-       // printf("Collision\n");
-        //Verifie toutes les collisions
-        for(int i = 0; i < N_corps; i++) {
-            for(int j = 0; j < N_corps; j++) {
-                if(i != j) {
-                    if(all_planete[i]->id != -1) {
-                        if(all_planete[j]->id != -1) {
-                            if(detect_collision(all_planete[i], all_planete[j])) {
-                                regroupe(all_planete[i], all_planete[j]);
-                            }
-                        }
-                    } else {
-                        break;
-                    }
-                }    
-            }
-        }
-
-        //Calcule les accélérations
-       // printf("Acceleration\n"); fflush(stdout);
-        for(int i = 0; i < N_corps; i++) {
-            all_planete[i]->a[0] = 0;
-            all_planete[i]->a[1] = 0;
-            for(int j = 0; j < N_corps; j++) {
-                if(i!=j) {
-                    if(all_planete[i]->id != -1) {
-                        if(all_planete[j]->id != -1) {
-                            all_planete[i]->a[0] += force_G(G, all_planete[i], all_planete[j],0);
-                            all_planete[i]->a[1] += force_G(G, all_planete[i], all_planete[j],1);
-                        }
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
-
-        for(int i = 0; i < N_corps; i++) {
-
-            if(all_planete[i]->id >=1) {
-
-                //Ajoute les accélérations aux vitesses
-                all_planete[i]->v[0] += 0.00000000001*all_planete[i]->a[0]; //0.000000000001
-                all_planete[i]->v[1] += 0.00000000001*all_planete[i]->a[1];
-
-                //Ajoute les vitesses aux positions
-                all_planete[i]->x[0] += all_planete[i]->v[0];
-                all_planete[i]->x[1] += all_planete[i]->v[1];
-            }
-        }
-
-        
-        write_frame(data,frame, all_planete, N_corps);
-        if(frame < nb_frame-1) {
-            virgule(data);
-        }
-
-        frame++;
-
-        //AJOUTER un thread quiverifie toutes les seconde que le fichier json courant
-        //n'a pas depasser une certaine taille. Si oui, il change une variable globale,
-        //se termine et est relancé pour surveiller le fichier suivant
-    }
-        end_file(data);
-
-        fclose(data);
+    end_file(data);
+    fclose(data);
 
     free_all_planete(all_planete, N_corps);
 

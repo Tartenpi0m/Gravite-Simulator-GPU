@@ -9,7 +9,7 @@
 planete * init_planete(int id, int MR, int rayon_max, int rayon_min,int v_init) {
 
     
-    planete * ma_planete = malloc(sizeof(planete));
+    planete * ma_planete = (planete *) malloc(sizeof(planete));
 
     //Vitesse entre 5 500 et 55 000 m/s
     ma_planete->id = id;
@@ -27,7 +27,7 @@ planete * init_planete(int id, int MR, int rayon_max, int rayon_min,int v_init) 
 
 
 planete * init_trou_noir() {
-    planete * ma_planete = malloc(sizeof(planete));
+    planete * ma_planete = (planete *) malloc(sizeof(planete));
     ma_planete->id=-2;
     ma_planete->x[0] = (rand() % 5 + 2)*(x_init_max/10);
     ma_planete->x[1] = (rand() % 5 + 2)*(x_init_max/17);
@@ -39,10 +39,7 @@ planete * init_trou_noir() {
 
 planete ** init_all_planete(int N_planete, int N_trou_noir, int MR, int rayon_max, int rayon_min, int v_init) {
     
-    planete ** tab = malloc(sizeof(planete*)*(N_planete+N_trou_noir));
-    for(int i = 0; i < N_planete+N_trou_noir; i++) {
-        tab[i] = malloc(sizeof(planete*));
-    }
+    planete ** tab = (planete **) malloc(sizeof(planete*)*(N_planete+N_trou_noir));
 
     for(int i = 0; i < N_planete; i++) {
         tab[i] = init_planete(i, MR, rayon_max, rayon_min, v_init);
@@ -53,6 +50,9 @@ planete ** init_all_planete(int N_planete, int N_trou_noir, int MR, int rayon_ma
             tab[i] = init_trou_noir();
         }
     }
+    /* for(int i = 0; i < N_planete+N_trou_noir; i++) {
+        tab[i] = (planete *) malloc(sizeof(planete*));
+    } */
 
     return tab;
 }

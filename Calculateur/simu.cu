@@ -1,10 +1,10 @@
 #include "planete.h"
-#include "simu.h"
+#include "simu.cuh"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-double min(double a, double b) {
+__device__ double mini(double a, double b) {
     if(a < b) {
         return a;
     } else {
@@ -12,12 +12,12 @@ double min(double a, double b) {
     }
 }
 
-double distance(planete * a, planete * b) {
+__host__ __device__ double distance(planete * a, planete * b) {
     return sqrt(pow(fabs(a->x[0] - b->x[0]),2) + pow(fabs(a->x[1] - b->x[1]),2));
 }
 
 //Regroupe 2 planetes en une (moyenne des position, moyenne des vitesses, addition des volumes (aires))
-void regroupe(planete * a, planete* b) {
+__host__ __device__ void regroupe(planete * a, planete* b) {
 
     if(b->id == -2) {
         return;
@@ -51,7 +51,7 @@ void regroupe(planete * a, planete* b) {
     b->masse = 0;
 }
 
-short detect_collision(planete * a, planete * b) {
+__host__ __device__ short detect_collision(planete * a, planete * b) {
 
     //Si collison
     if( distance(a,b) < a->rayon + b->rayon) {
