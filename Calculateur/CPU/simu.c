@@ -20,35 +20,47 @@ double distance(planete * a, planete * b) {
 void regroupe(planete * a, planete* b) {
 
     if(b->id == -2) {
+        a->id = -1;
+        a->rayon = 0;
+        a->v[0] = 0;
+        a->v[1] = 0;
+        a->x[0] = 0;
+        a->x[1] = 0;
+        a->masse = 0;
         return;
     }
-    if(a->id != -2) {
+    if(a->id >=0) {
 
-        if(a->rayon > b->rayon) {
+        if(b->id >= 0) {
+            if(a->rayon > b->rayon) {
 
-            a->v[0] = (a->v[0] +b->v[0]) / 2;
-            a->v[1] = (a->v[1] + b->v[1]) / 2; 
+                a->v[0] = (a->v[0] +b->v[0]) / 2;
+                a->v[1] = (a->v[1] + b->v[1]) / 2; 
 
-            double ratio = a->masse/b->masse;
-            double coefa = 2*(ratio/(ratio+1));
-            a->x[0] = (coefa*a->x[0] + (2-coefa)*b->x[0])/2;
-            a->x[1] = (coefa*a->x[1] + (2-coefa)*b->x[1])/2;
-            a->rayon = sqrt(pow(a->rayon,2)+pow(b->rayon,2));
-            a->masse += b->masse;
-        } else {
+                double ratio = a->masse/b->masse;
+                double coefa = 2*(ratio/(ratio+1));
+                a->x[0] = (coefa*a->x[0] + (2-coefa)*b->x[0])/2;
+                a->x[1] = (coefa*a->x[1] + (2-coefa)*b->x[1])/2;
+                a->rayon = sqrt(pow(a->rayon,2)+pow(b->rayon,2));
+                a->masse += b->masse;
                 return;
+            } else {
+                a->id = -1;
+                a->rayon = 0;
+                a->v[0] = 0;
+                a->v[1] = 0;
+                a->x[0] = 0;
+                a->x[1] = 0;
+                a->masse = 0;
+                    return;
+            }
         }
 
 
-    }
 
-    b->id = -1;
-    b->rayon = 0;
-    b->v[0] = 0;
-    b->v[1] = 0;
-    b->x[0] = 0;
-    b->x[1] = 0;
-    b->masse = 0;
+    } else {
+        return;
+    }
 }
 
 short detect_collision(planete * a, planete * b) {

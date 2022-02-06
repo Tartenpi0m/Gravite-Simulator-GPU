@@ -30,18 +30,18 @@ void end_file(FILE * f) {
 }
 
 //n nulero de fram, //len
-void write_frame(FILE * f, long unsigned int frame, planete ** planets_tab, int N_planete) {
+void write_frame(FILE * f, long unsigned int frame, planete * planets_tab, int N_planete) {
 
     begin_frame(f,frame);
     for(int i = 0; i < N_planete-1; i++) {
-       if(planets_tab[i]->id == -1) {
+       if(planets_tab[i].id == -1) {
             continue;
         } else {
-            add_planet(f,planets_tab[i]);
+            add_planet(f,&planets_tab[i]);
             virgule(f);
         }
     }
-    add_planet(f,planets_tab[N_planete-1]);
+    add_planet(f,&planets_tab[N_planete-1]);
     end_frame(f);
 
 }

@@ -46,7 +46,7 @@ int main() {
 
     printf("%ld %d", G,MR);
     //Initialiser les planètes
-    planete ** all_planete = init_all_planete(N_planete, N_trou_noir, MR, rayon_max, rayon_min, v_init);
+    planete * all_planete = init_all_planete(N_planete, N_trou_noir, MR, rayon_max, rayon_min, v_init);
 
     //ENVOIE DU SIGNAL "debut des calculs"
     char y[8] = {'s','t','a','r','t','e','d'};

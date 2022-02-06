@@ -11,4 +11,4 @@ void add_planet(FILE * f, planete * p);
 void virgule(FILE * f);
 void end_frame(FILE * f);
 void end_file(FILE * f);
-void write_frame(FILE * f, long unsigned int frame, planete ** planets_tab, int N_planete);
+void write_frame(FILE * f, long unsigned int frame, planete * planets_tab, int N_planete);

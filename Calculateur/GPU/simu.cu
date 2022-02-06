@@ -19,36 +19,54 @@ __host__ __device__ double distance(planete * a, planete * b) {
 //Regroupe 2 planetes en une (moyenne des position, moyenne des vitesses, addition des volumes (aires))
 __host__ __device__ void regroupe(planete * a, planete* b) {
 
-    if(b->id == -2) {
-        return;
+
+    if(a->id == -2) { //Si je trou noir, je retrecis l'autre
+        b->id = -1;
+        b->rayon = 0;
+        b->v[0] = 0;
+        b->v[1] = 0;
+        b->x[0] = 0;
+        b->x[1] = 0;
+        b->masse = 0;
+
+    } else if (b->id == -2) {
+        a->id = -1;
+        a->rayon = 0;
+        a->v[0] = 0;
+        a->v[1] = 0;
+        a->x[0] = 0;
+        a->x[1] = 0;
+        a->masse = 0;
+
+    } else { //Si tt le monde est planete
+
+        if(a->rayon < b->rayon) {
+            planete * tmp = a;
+            a = b;
+            b = tmp;
+        } 
+
+        a->v[0] = (a->v[0] +b->v[0]) / 2;
+        a->v[1] = (a->v[1] + b->v[1]) / 2; 
+
+        double ratio = a->masse/b->masse;
+        double coefa = 2*(ratio/(ratio+1));
+        a->x[0] = (coefa*a->x[0] + (2-coefa)*b->x[0])/2;
+        a->x[1] = (coefa*a->x[1] + (2-coefa)*b->x[1])/2;
+        a->rayon = sqrt(pow(a->rayon,2)+pow(b->rayon,2));
+        a->masse += b->masse;
+
+        b->id = -1;
+        b->rayon = 0;
+        b->v[0] = 0;
+        b->v[1] = 0;
+        b->x[0] = 0;
+        b->x[1] = 0;
+        b->masse = 0;
+    
     }
-    if(a->id != -2) {
-
-        if(a->rayon > b->rayon) {
-
-            a->v[0] = (a->v[0] +b->v[0]) / 2;
-            a->v[1] = (a->v[1] + b->v[1]) / 2; 
-
-            double ratio = a->masse/b->masse;
-            double coefa = 2*(ratio/(ratio+1));
-            a->x[0] = (coefa*a->x[0] + (2-coefa)*b->x[0])/2;
-            a->x[1] = (coefa*a->x[1] + (2-coefa)*b->x[1])/2;
-            a->rayon = sqrt(pow(a->rayon,2)+pow(b->rayon,2));
-            a->masse += b->masse;
-        } else {
-                return;
-        }
 
 
-    }
-
-    b->id = -1;
-    b->rayon = 0;
-    b->v[0] = 0;
-    b->v[1] = 0;
-    b->x[0] = 0;
-    b->x[1] = 0;
-    b->masse = 0;
 }
 
 __host__ __device__ short detect_collision(planete * a, planete * b) {
@@ -61,7 +79,7 @@ __host__ __device__ short detect_collision(planete * a, planete * b) {
     }
 }
 
-double force_G(long int G, planete * a, planete * b, int coord) {
+__host__ __device__ double force_G(long int G, planete * a, planete * b, int coord) {
     double d_h = (a->x[0] - b->x[0]);
     double d_v = (a->x[1] - b->x[1]);
     double d = distance(a, b);

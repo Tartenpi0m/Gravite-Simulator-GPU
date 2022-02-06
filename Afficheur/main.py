@@ -20,7 +20,7 @@ frame_list = [False,False]
 #paramètre
 N_planete = 2 #nombre de planetes
 N_trou_noir = 1
-frame = 5#500 #Nombre de frame à calculer
+frame = 1#500 #Nombre de frame à calculer
 G = 10 #Constante de gravitation
 MR = 30 #Rapport de puissance masse rayon
 rayon_max = 10

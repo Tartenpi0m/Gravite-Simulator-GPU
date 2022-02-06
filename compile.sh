@@ -1,2 +1,3 @@
-make -C ./Calculateur clean
-make -C ./Calculateur compile
+DEVICE=$1
+make -C ./Calculateur/$DEVICE clean
+make -C ./Calculateur/$DEVICE compile
