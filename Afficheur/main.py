@@ -18,13 +18,13 @@ num_fichier = 0
 frame_list = [False,False]
 
 #paramètre
-N_planete = 2 #nombre de planetes
+N_planete = 700 #nombre de planetes
 N_trou_noir = 1
-frame = 1#500 #Nombre de frame à calculer
+frame = 500#500 #Nombre de frame à calculer
 G = 10 #Constante de gravitation
 MR = 30 #Rapport de puissance masse rayon
-rayon_max = 10
-rayon_min = 5
+rayon_max = 7
+rayon_min = 3
 v_init = 5
 
 #paramètre conversion km to px

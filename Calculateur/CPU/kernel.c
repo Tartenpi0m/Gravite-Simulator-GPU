@@ -2,6 +2,7 @@
 #include "planete.h"
 #include "simu.h"
 #include "to_json.h"
+#include <sys/time.h>
 
 void calculCollision(planete * all_planete, int N_corps) {
 
@@ -65,15 +66,25 @@ void gestion(int nb_frame, planete * all_planete, int N_corps, FILE * data, long
 
     int frame = 0;
     //cudamalloc
+
+    struct timeval start;
+    struct timeval end;
+    float temps = 0;
+
     while(frame < nb_frame) {
 
+        gettimeofday(&start, NULL); //temps
+
+        ////CALCUL////
         calculCollision(all_planete, N_corps);
-
         calculAcceleration(all_planete, N_corps, G);
-
         updatePosition(all_planete, N_corps);
 
+        gettimeofday(&end, NULL); //temps
+        temps += (end.tv_sec - start.tv_sec) + 1e-6*(end.tv_usec - start.tv_usec);
         
+
+        ////JSON////
         write_frame(data,frame, all_planete, N_corps);
         if(frame < nb_frame-1) {
             virgule(data);
@@ -81,5 +92,7 @@ void gestion(int nb_frame, planete * all_planete, int N_corps, FILE * data, long
 
         frame++;
     }
+
+     printf("\nTIME : %f s\n\n\n", temps);
 
 }

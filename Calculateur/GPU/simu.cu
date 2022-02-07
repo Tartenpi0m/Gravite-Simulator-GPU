@@ -2,7 +2,6 @@
 #include "simu.cuh"
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 __device__ double mini(double a, double b) {
     if(a < b) {
@@ -12,12 +11,17 @@ __device__ double mini(double a, double b) {
     }
 }
 
-__host__ __device__ double distance(planete * a, planete * b) {
-    return sqrt(pow(fabs(a->x[0] - b->x[0]),2) + pow(fabs(a->x[1] - b->x[1]),2));
+__device__ double distance(planete * a, planete * b) {
+    double x = pow(fabs(a->x[0] - b->x[0]),2) + pow(fabs(a->x[1] - b->x[1]),2);
+    if(isnan(x)) {
+        return 0;
+    } else {
+        return sqrt(x);
+    }
 }
 
 //Regroupe 2 planetes en une (moyenne des position, moyenne des vitesses, addition des volumes (aires))
-__host__ __device__ void regroupe(planete * a, planete* b) {
+__device__ void regroupe(planete * a, planete* b) {
 
 
     if(a->id == -2) { //Si je trou noir, je retrecis l'autre
@@ -69,7 +73,8 @@ __host__ __device__ void regroupe(planete * a, planete* b) {
 
 }
 
-__host__ __device__ short detect_collision(planete * a, planete * b) {
+
+__device__ short detect_collision(planete * a, planete * b) {
 
     //Si collison
     if( distance(a,b) < a->rayon + b->rayon) {
@@ -79,11 +84,17 @@ __host__ __device__ short detect_collision(planete * a, planete * b) {
     }
 }
 
-__host__ __device__ double force_G(long int G, planete * a, planete * b, int coord) {
+__device__ double force_G(long int G, planete * a, planete * b, int coord) {
     double d_h = (a->x[0] - b->x[0]);
     double d_v = (a->x[1] - b->x[1]);
     double d = distance(a, b);
+    if(d == 0 || isnan(d) ) {
+        return 1;
+    } 
     double force = G*pow(10,-11)*(b->masse/(d*d));
+    if(isnan(force)) {
+        return 0;
+    }
     double teta = acos(fabs(d_h/d));
 
     double x;
@@ -101,11 +112,5 @@ __host__ __device__ double force_G(long int G, planete * a, planete * b, int coo
         }  else {
             return x;
         }
-    }
-    
-    
-
-    
-
-    
+    } 
 }

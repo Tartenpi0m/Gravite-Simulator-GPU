@@ -1,7 +1,7 @@
 DEVICE=$1
 
 if [[ $DEVICE == "GPU" ]]; then
-    cuda-memcheck ./Calculateur/GPU/maingpu --show-backtrace &
+     ./Calculateur/GPU/maingpu --show-backtrace &
 elif [[ $DEVICE == "CPU" ]]; then
     ./Calculateur/CPU/main &
 else
